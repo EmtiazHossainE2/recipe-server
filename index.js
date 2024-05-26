@@ -41,7 +41,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server
-    // await client.connect();
+    await client.connect();
 
     const userCollection = client.db("recipeDB").collection("users");
     const recipeCollection = client.db("recipeDB").collection("recipes");
@@ -57,7 +57,7 @@ async function run() {
 
     // middlewares
     const verifyToken = (req, res, next) => {
-      console.log("inside verify token", req.headers.authorization);
+      // console.log("inside verify token", req.headers.authorization);
       if (!req.headers.authorization) {
         return res.status(401).send({ message: "Unauthorized access" });
       }
@@ -80,7 +80,7 @@ async function run() {
     // Create new user
     app.post("/users", async (req, res) => {
       const user = req.body;
-      console.log(user);
+      // console.log(user , 'new');
       const query = { email: user.email };
       const existingUser = await userCollection.findOne(query);
       if (existingUser) {
